@@ -1,0 +1,10 @@
+1，webView访问https网页要加证书：
+
+ mWebView.setWebViewClient(new WebViewClient(){
+   public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        super.onReceivedSslError(view, handler, error);
+        handler.proceed();  // 接受所有网站的证书
+   }
+});
+
+2，webView 获取数据之前要登录网页。
