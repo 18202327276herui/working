@@ -8,3 +8,37 @@
 });
 
 2，webView 获取数据之前要登录网页。
+
+3，使用Glide加载网络图片时，如果url没变，但是图片已经变了，Glide不会加载新的图片，它会缓存之前加载的
+图片。
+解决方法：
+添加.diskCacheStrategy(DiskCacheStrategy.NONE) 不使用缓存。
+如：
+        Glide.with(this).load(APIConstant.USUNG_HOST + user.getFaceUrl())
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.mipmap.img_team_default_user)
+                .into(img_head);
+	clearImageDiskCache（）；
+
+    /**
+     * 清除图片磁盘缓存
+     */
+    public void clearImageDiskCache() {
+        Glide.get(getActivity()).clearMemory();
+
+        try {
+            if (Looper.myLooper() == Looper.getMainLooper()) { //只能在非主线程执行
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Glide.get(getActivity()).clearDiskCache();
+                    }
+                });
+            } else {
+                Glide.get(getActivity()).clearDiskCache();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
