@@ -1,0 +1,84 @@
+import com.android.build.gradle.internal.dsl.ProductFlavor
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+
+    defaultConfig {
+        applicationId "com.usung.smarttradetwo"
+        minSdkVersion 11
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+//        multiDexEnable = true
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g" }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked"
+    }
+}
+
+dependencies {
+    //    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    // okhttp 框架
+    compile 'com.zhy:okhttputils:2.5.2'
+    compile 'com.google.code.gson:gson:2.2.4'
+    // 刷新包
+    compile project(':refreshlibrary')
+    // 版本更新包
+    compile project(':update_library')
+    // 图片处理包 glide
+    //    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //    compile 'com.github.bumptech.glide:glide:3.5.2'
+    // 百度推送
+    compile files('libs/pushservice-5.0.0.66.jar')
+    // 百度定位
+    //    compile files('libs/locSDK_6.23.jar')
+    //    compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/httpmime-4.1.2.jar')
+    compile files('libs/IndoorscapeAlbumPlugin.jar')
+    // 带圆角iamgeview（可设置圆角）
+    compile 'com.makeramen:roundedimageview:2.2.1'
+    // https://github.com/vinc3m1/RoundedImageView
+    // 圆形ImageView控件框架
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    // https://github.com/hdodenhof/CircleImageView
+    //    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.zhy:autolayout:1.4.3'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
+    //    compile 'com.google.android.gms:play-services:7.0.0'
+    compile project(':easeui')
+    compile files('libs/alipaySdk-20160516.jar')
+    compile project(':timessquare_library')
+    compile files('libs/nineoldandroids-2.4.0-2.jar')
+}
+
+
+
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked"
+        }
+    }
+}

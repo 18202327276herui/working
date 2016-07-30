@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '24'
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 20
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    allprojects {
+        gradle.projectsEvaluated {
+            tasks.withType(JavaCompile) {
+                options.compilerArgs << "-Xlint:unchecked"
+            }
+        }
+}
+
+}
+dependencies {
+    //release时需要把hyphenatechatsdk的依赖注释掉，sdk已经被打成jar包放在libs底下
+    //compile project(':hyphenatechatsdk')
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    // 带圆角iamgeview（可设置圆角）
+    compile 'com.makeramen:roundedimageview:2.2.1'
+    // https://github.com/vinc3m1/RoundedImageView
+    // 圆形ImageView控件框架
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    // https://github.com/hdodenhof/CircleImageView
+    compile files('libs/locSDK_6.23.jar')
+    compile files('libs/baidumapapi_map_v4_0_0.jar')
+    compile files('libs/baidumapapi_base_v4_0_0.jar')
+    compile files('libs/baidumapapi_util_v4_0_0.jar')
+}
