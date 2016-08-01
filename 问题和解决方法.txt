@@ -42,3 +42,16 @@
             e.printStackTrace();
         }
     }
+
+4,ExpandableListView 改变箭头方向
+在 getGroupView（）中加：
+        //箭头方向
+        if (isExpanded) {
+            Drawable drawable = activity.getResources().getDrawable(R.mipmap.arrow_up);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+            viewHolder.txt_company.setCompoundDrawables(null, null, drawable, null);//画在右边
+        } else {
+            Drawable drawable = activity.getResources().getDrawable(R.mipmap.arrow_down);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+            viewHolder.txt_company.setCompoundDrawables(null, null, drawable, null);//画在右边
+        }
