@@ -55,3 +55,9 @@
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
             viewHolder.txt_company.setCompoundDrawables(null, null, drawable, null);//画在右边
         }
+
+5，webView 自适应界面
+        // 打开页面时， 自适应屏幕：
+        mWebView.getSettings().setUseWideViewPort(true); //设置此属性，可任意比例缩放
+        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
